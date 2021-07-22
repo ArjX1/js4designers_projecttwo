@@ -13,12 +13,41 @@ let z = 1;
 
 slideArea.addEventListener('click', function() {
     currentSlide = currentSlide + 1;
-    z = z + 1;
+ 
 
     if (currentSlide > images.length - 1) {
         currentSlide = 0;
     }
 
+    z = z + 1;
+
+    // remove the animation from the style for every image
+
+    images.forEach(image => {
+        image.style.animation = ""
+    })
+
     // pick the right image
     images[currentSlide].style.zIndex = z;
+    images[currentSlide].style.animation = 'fade 0.5s'
 });
+
+
+// when I put my mouse over the slide area, put all of the images 
+// in a random place
+
+slideArea.addEventListener('mouseover', function() {
+    images.forEach(image => {
+        const xDirection = 25 * (Math.floor(Math.random() * 5)) - 50
+        const yDirection = 25 * (Math.floor(Math.random() * 5)) - 50
+
+        image.style.transform = `translate(${xDirection}px, ${yDirection}px)`
+
+    })
+})
+
+slideArea.addEventListener("mouseout", function() {
+    images.forEach(image => {
+        image.style.transform = ""
+    })
+})
